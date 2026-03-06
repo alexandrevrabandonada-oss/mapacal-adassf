@@ -1,0 +1,153 @@
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string;
+          display_name: string | null;
+          role: string;
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          display_name?: string | null;
+          role?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          display_name?: string | null;
+          role?: string;
+          created_at?: string;
+        };
+      };
+      sidewalk_reports: {
+        Row: {
+          id: string;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+          status: string;
+          condition: string;
+          lat: number;
+          lng: number;
+          neighborhood: string | null;
+          note: string | null;
+          photo_public_path: string | null;
+          photo_private_path: string | null;
+          needs_review: boolean;
+          accuracy_m: number | null;
+        };
+        Insert: {
+          id?: string;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+          status?: string;
+          condition: string;
+          lat: number;
+          lng: number;
+          neighborhood?: string | null;
+          note?: string | null;
+          photo_public_path?: string | null;
+          photo_private_path?: string | null;
+          needs_review?: boolean;
+          accuracy_m?: number | null;
+        };
+        Update: {
+          id?: string;
+          created_by?: string;
+          created_at?: string;
+          updated_at?: string;
+          status?: string;
+          condition?: string;
+          lat?: number;
+          lng?: number;
+          neighborhood?: string | null;
+          note?: string | null;
+          photo_public_path?: string | null;
+          photo_private_path?: string | null;
+          needs_review?: boolean;
+          accuracy_m?: number | null;
+        };
+      };
+      sidewalk_tags: {
+        Row: {
+          slug: string;
+          label: string;
+        };
+        Insert: {
+          slug: string;
+          label: string;
+        };
+        Update: {
+          slug?: string;
+          label?: string;
+        };
+      };
+      sidewalk_report_tags: {
+        Row: {
+          report_id: string;
+          tag_slug: string;
+        };
+        Insert: {
+          report_id: string;
+          tag_slug: string;
+        };
+        Update: {
+          report_id?: string;
+          tag_slug?: string;
+        };
+      };
+      sidewalk_verifications: {
+        Row: {
+          report_id: string;
+          user_id: string;
+          created_at: string;
+        };
+        Insert: {
+          report_id: string;
+          user_id: string;
+          created_at?: string;
+        };
+        Update: {
+          report_id?: string;
+          user_id?: string;
+          created_at?: string;
+        };
+      };
+      moderation_events: {
+        Row: {
+          id: string;
+          report_id: string;
+          moderator_id: string | null;
+          action: string;
+          reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          report_id: string;
+          moderator_id?: string | null;
+          action: string;
+          reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          report_id?: string;
+          moderator_id?: string | null;
+          action?: string;
+          reason?: string | null;
+          created_at?: string;
+        };
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
+}
