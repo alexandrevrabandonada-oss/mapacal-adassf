@@ -1,0 +1,67 @@
+import Link from "next/link";
+
+import { ReportMap } from "@/components/map/report-map";
+import { SectionCard } from "@/components/section-card";
+import { SiteShell } from "@/components/site-shell";
+import { listPublishedReports } from "@/lib/reports/list-published";
+
+export default async function MapaPage() {
+  const result = await listPublishedReports();
+
+  return (
+    <SiteShell
+      title="Mapa publico da cidade"
+      subtitle="Mostrando apenas registros publicados. Registros enviados passam por moderacao antes de entrar no mapa."
+    >
+      <SectionCard title="Status do produto" eyebrow="T05 ativo">
+        <ul className="space-y-2">
+          <li>- Registro cidadao: ativo.</li>
+          <li>- Mapa publico: ativo.</li>
+          <li>- Verificacao comunitaria: ativa.</li>
+          <li>- Foto: proximo tijolo.</li>
+          <li>- Moderacao: parcial.</li>
+        </ul>
+      </SectionCard>
+
+      {result.reason === "env-missing" ? (
+        <SectionCard title="Mapa indisponivel neste ambiente" eyebrow="Configuracao">
+          <p>{result.message || "Supabase nao configurado."}</p>
+          <p className="mt-2">Sem env, a pagina nao quebra: apenas desativa a leitura publica.</p>
+        </SectionCard>
+      ) : null}
+
+      {result.reason === "rpc-missing" ? (
+        <SectionCard title="SQL T04 pendente" eyebrow="Banco">
+          <p>{result.message || "A camada publica do mapa ainda nao foi aplicada no Supabase."}</p>
+          <p className="mt-2">Rode `supabase/sql/T04_public_map.sql` no SQL Editor para ativar listagem publica com verificacoes.</p>
+        </SectionCard>
+      ) : null}
+
+      {result.reason === "db-error" ? (
+        <SectionCard title="Falha ao carregar mapa publico" eyebrow="Banco">
+          <p>{result.message || "Nao foi possivel consultar os registros publicados agora."}</p>
+          <p className="mt-2">A pagina segue estavel. Tente novamente apos validar o schema e as politicas no Supabase.</p>
+        </SectionCard>
+      ) : null}
+
+      {result.ok && result.items.length === 0 && !result.reason ? (
+        <SectionCard title="Mapa sem pontos publicados" eyebrow="Estado vazio">
+          <p>Nenhum ponto publicado ainda.</p>
+          <p className="mt-2">Registros novos entram como pending. Publique manualmente no dashboard para aparecer aqui.</p>
+          <Link
+            href="/novo"
+            className="mt-3 inline-block border-2 border-[var(--ink)] bg-[var(--paper)] px-3 py-2 text-xs font-bold uppercase hover:bg-[var(--signal)]"
+          >
+            Criar registro
+          </Link>
+        </SectionCard>
+      ) : null}
+
+      {result.ok && result.items.length > 0 ? (
+        <section className="md:col-span-2">
+          <ReportMap items={result.items} />
+        </section>
+      ) : null}
+    </SiteShell>
+  );
+}

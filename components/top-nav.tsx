@@ -3,8 +3,12 @@ import Link from "next/link";
 const links = [
   { href: "/", label: "Inicio" },
   { href: "/mapa", label: "Mapa" },
+  { href: "/territorio", label: "Territorio" },
+  { href: "/timeline", label: "Timeline" },
   { href: "/novo", label: "Novo Relato" },
   { href: "/transparencia", label: "Transparencia" },
+  { href: "/snapshots/materializados/transparencia", label: "Snapshots" },
+  { href: "/admin/snapshot-jobs", label: "Jobs Snapshot" },
   { href: "/admin/moderacao", label: "Moderacao" }
 ];
 

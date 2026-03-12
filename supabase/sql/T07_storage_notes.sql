@@ -1,0 +1,88 @@
+-- T07: Foto privada com signed URL
+-- Criar bucket manualmente via Supabase Dashboard
+-- NÃO aplicar este SQL via SQL Editor (policies de storage são gerenciadas via Dashboard)
+
+-- ============================================================
+-- BUCKET CONFIGURATION (via Supabase Dashboard)
+-- ============================================================
+-- Nome: sidewalk-private
+-- Public: FALSE (desmarcar "Public bucket")
+-- Allowed MIME types: image/jpeg, image/png, image/webp
+-- File size limit: 8 MB
+
+-- ============================================================
+-- STORAGE POLICIES (configurar via Dashboard > Storage > Policies)
+-- ============================================================
+-- Policy 1: "Authenticated users can upload to their own folder"
+-- Operation: INSERT
+-- Policy definition:
+-- CREATE POLICY "Authenticated users can upload"
+-- ON storage.objects FOR INSERT
+-- TO authenticated
+-- WITH CHECK (
+--   bucket_id = 'sidewalk-private'
+--   AND auth.uid()::text = (storage.foldername(name))[1]
+-- );
+
+-- Policy 2: "Users can update their own files"
+-- Operation: UPDATE
+-- Policy definition:
+-- CREATE POLICY "Users can update own files"
+-- ON storage.objects FOR UPDATE
+-- TO authenticated
+-- USING (
+--   bucket_id = 'sidewalk-private'
+--   AND auth.uid()::text = (storage.foldername(name))[1]
+-- );
+
+-- Policy 3: "Users can delete their own files"
+-- Operation: DELETE
+-- Policy definition:
+-- CREATE POLICY "Users can delete own files"
+-- ON storage.objects FOR DELETE
+-- TO authenticated
+-- USING (
+--   bucket_id = 'sidewalk-private'
+--   AND auth.uid()::text = (storage.foldername(name))[1]
+-- );
+
+-- Policy 4: "Authenticated users can read all files" (para moderadores verem fotos)
+-- Operation: SELECT
+-- Policy definition:
+-- CREATE POLICY "Authenticated users can read"
+-- ON storage.objects FOR SELECT
+-- TO authenticated
+-- USING (bucket_id = 'sidewalk-private');
+
+-- ============================================================
+-- OBSERVAÇÕES
+-- ============================================================
+-- 1. Bucket é PRIVADO: nenhuma URL pública direta funciona
+-- 2. Exibição pública usa signed URL server-side APENAS para reports published
+-- 3. Signed URLs expiram em 1 hora (configurável)
+-- 4. Path padrão: reports/{userId}/{reportId}/{timestamp}-{filename}
+-- 5. Moderadores veem foto mesmo de reports pending via signed URL
+-- 6. Campo sidewalk_reports.photo_private_path armazena o path
+-- 7. Campo sidewalk_reports.photo_public_path fica NULL (não usado em T07)
+
+-- ============================================================
+-- SETUP MANUAL
+-- ============================================================
+-- 1. Acesse Supabase Dashboard > Storage
+-- 2. Clique "New Bucket"
+-- 3. Name: sidewalk-private
+-- 4. DESMARQUE "Public bucket"
+-- 5. File size limit: 8388608 (8 MB)
+-- 6. Allowed MIME types: image/jpeg,image/png,image/webp
+-- 7. Clique "Create bucket"
+-- 8. Vá para Policies tab do bucket
+-- 9. Adicione as 4 policies descritas acima manualmente
+
+-- ============================================================
+-- PRÓXIMOS PASSOS (T08+)
+-- ============================================================
+-- - EXIF stripping (remover metadados de localização)
+-- - Compressão/redimensionamento automático
+-- - Múltiplas fotos por report
+-- - Thumbnail generation
+-- - CDN/cache para signed URLs

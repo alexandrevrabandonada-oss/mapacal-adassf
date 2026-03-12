@@ -6,8 +6,13 @@ import { SiteShell } from "@/components/site-shell";
 
 const quickLinks = [
   { href: "/mapa", label: "Ver mapa base" },
+  { href: "/territorio", label: "Ler cobertura territorial" },
   { href: "/novo", label: "Entender fluxo de novo relato" },
-  { href: "/transparencia", label: "Acompanhar indicadores" }
+  { href: "/transparencia", label: "Acompanhar indicadores" },
+  { href: "/timeline", label: "Ler timeline temporal" },
+  { href: "/alertas", label: "Monitorar Alertas Automáticos" },
+  { href: "/snapshots/materializados/transparencia", label: "Abrir snapshots materializados" },
+  { href: "/admin/snapshot-jobs", label: "Operar jobs de snapshot" }
 ];
 
 export default function HomePage() {
@@ -46,6 +51,55 @@ export default function HomePage() {
           <li>- Base visual de alto contraste, direta e sem maquiagem.</li>
           <li>- Rotas para mapa, novos relatos, transparencia e moderacao.</li>
           <li>- Pipeline de verificacao tecnica para manter estabilidade.</li>
+        </ul>
+      </SectionCard>
+
+      <SectionCard title="Status de entrega" eyebrow="Camadas ativas">
+        <ul className="space-y-2">
+          <li>- Registro cidadao: ativo.</li>
+          <li>- Mapa publico: ativo.</li>
+          <li>- Verificacao comunitaria: ativa.</li>
+          <li>- Moderacao operacional: ativa.</li>
+          <li>- Foto privada: ativa (signed URL).</li>
+          <li>- Transparencia publica: ativa (metricas + export).</li>
+          <li>- Cobertura territorial: ativa (priorizacao por bairro).</li>
+          <li>- Snapshots publicos: ativos.</li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Auto-diff pós-snapshot (T12d): ativa
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Alertas automáticos (T13): ativos
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Entrega externa por webhook (T13b): ativa
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Retry/backoff de entrega (T13c): ativo
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            OG cards públicos (T14): ativos
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            OG de telas agregadas (T14b): ativos
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Destinos Nativos (T15): ativos
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Payloads Ricos (T15b): ativos (fotos/signed)
+          </li>
+          <li className="flex items-center text-sm md:text-base">
+            <span className="w-4 h-4 mr-2 bg-green-500 rounded-full flex-shrink-0"></span>
+            Share Packs Públicos (T16): ativos
+          </li>
         </ul>
       </SectionCard>
 

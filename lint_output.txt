@@ -1,0 +1,12 @@
+
+> mapa-calcadas-sf@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+C:\Projetos\Mapa Cal├ºadas SF\lib\alerts\deliver-alerts-to-destinations.ts
+   27:5   error  'url' is never reassigned. Use 'const' instead      prefer-const
+  172:25  error  'headers' is never reassigned. Use 'const' instead  prefer-const
+
+Ô£û 2 problems (2 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

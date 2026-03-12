@@ -1,0 +1,14 @@
+-- T12c: Scheduler Bridge (SQL Auxiliar)
+-- Data: 2026-03-09
+-- Autor: Sistema Automatizado
+-- 
+-- IMPORTANTE:
+-- Para a camada T12c, nenhuma nova tabela, trigger ou RPC precisou ser criada no banco.
+-- A logica de execucao em lote e elegibilidade continua na aplicacao (Next.js server-side),
+-- evitando criar complexidade desnecessaria no banco (ex: agendador pg_cron ou restricoes em db).
+-- O endpoint /api/cron atua como limitador e autorizador via config de ambiente.
+-- 
+-- Esta abordagem cumpre os requisitos de manter a estrutura minima, delegando a regra
+-- de negocio (descobrir quais jobs sao elegiveis) para TypeScript na API.
+-- Em versoes futuras ou necessidades de fila de prioridade intensa, esta estrategia
+-- podera ser revista.

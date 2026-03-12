@@ -1,0 +1,22 @@
+
+> mapa-calcadas-sf@0.1.0 build
+> next build
+
+   Ôû▓ Next.js 15.5.12
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully in 5.9s
+   Linting and checking validity of types ...
+Failed to compile.
+
+./app/api/admin/alerts/deliver/retry/route.ts:35:35
+Type error: 'err' is of type 'unknown'.
+
+  33 |         console.error("[POST /api/admin/alerts/deliver/retry]", err);
+  34 |         return NextResponse.json(
+> 35 |             { ok: false, message: err.message || "Erro desconhecido", attempted: 0, succeeded: 0, failed: 0, skipped: 0, results: [] },
+     |                                   ^
+  36 |             { status: 500 }
+  37 |         );
+  38 |     }
+Next.js build worker exited with code: 1 and signal: null

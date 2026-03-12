@@ -1,0 +1,80 @@
+import type { SidewalkCondition } from "@/lib/domain/sidewalk";
+import { SIDEWALK_CONDITIONS, getConditionLabel } from "@/lib/domain/sidewalk";
+
+type ReportFiltersProps = {
+  condition: "all" | SidewalkCondition;
+  neighborhood: string;
+  verifiedOnly: boolean;
+  neighborhoodOptions: string[];
+  onConditionChange: (value: "all" | SidewalkCondition) => void;
+  onNeighborhoodChange: (value: string) => void;
+  onVerifiedOnlyChange: (value: boolean) => void;
+  onClear: () => void;
+};
+
+export function ReportFilters({
+  condition,
+  neighborhood,
+  verifiedOnly,
+  neighborhoodOptions,
+  onConditionChange,
+  onNeighborhoodChange,
+  onVerifiedOnlyChange,
+  onClear
+}: ReportFiltersProps) {
+  return (
+    <section className="space-y-3 border-2 border-[var(--ink)] bg-white p-3">
+      <h3 className="text-xs font-black uppercase tracking-[0.12em]">Filtros</h3>
+
+      <label className="block space-y-1 text-sm">
+        <span className="text-xs font-semibold uppercase tracking-[0.08em]">Condicao</span>
+        <select
+          value={condition}
+          onChange={(event) => onConditionChange(event.target.value as "all" | SidewalkCondition)}
+          className="w-full border-2 border-[var(--ink)] bg-[var(--paper)] px-2 py-2"
+        >
+          <option value="all">Todas</option>
+          {SIDEWALK_CONDITIONS.map((item) => (
+            <option key={item} value={item}>
+              {getConditionLabel(item)}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label className="block space-y-1 text-sm">
+        <span className="text-xs font-semibold uppercase tracking-[0.08em]">Bairro</span>
+        <input
+          type="text"
+          value={neighborhood}
+          list="mapa-neighborhood-options"
+          onChange={(event) => onNeighborhoodChange(event.target.value)}
+          className="w-full border-2 border-[var(--ink)] bg-[var(--paper)] px-2 py-2"
+          placeholder="Ex: Centro"
+        />
+        <datalist id="mapa-neighborhood-options">
+          {neighborhoodOptions.map((value) => (
+            <option key={value} value={value} />
+          ))}
+        </datalist>
+      </label>
+
+      <label className="flex items-center gap-2 text-sm">
+        <input
+          type="checkbox"
+          checked={verifiedOnly}
+          onChange={(event) => onVerifiedOnlyChange(event.target.checked)}
+        />
+        Apenas verificados
+      </label>
+
+      <button
+        type="button"
+        onClick={onClear}
+        className="border-2 border-[var(--ink)] bg-[var(--paper)] px-3 py-2 text-xs font-bold uppercase hover:bg-[var(--signal)]"
+      >
+        Limpar filtros
+      </button>
+    </section>
+  );
+}
