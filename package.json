@@ -11,6 +11,8 @@
     "verify": "npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.4.0",
+    "@supabase/supabase-js": "^2.43.0",
     "maplibre-gl": "^5.19.0",
     "next": "^15.3.0",
     "react": "^19.0.0",
